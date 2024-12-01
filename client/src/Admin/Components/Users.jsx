@@ -10,7 +10,7 @@
       // Fetch users on component load
       useEffect(() => {
         const fetchUsers = async () => {
-          const endpoint = "user/users"; 
+          const endpoint = "user/users";    
           const method = "GET";
           const headers = {
             'Content-Type': 'application/json',

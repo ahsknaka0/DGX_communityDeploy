@@ -24,8 +24,7 @@ const AdminDashboard = () => {
         return <GuidelineManager />;
       case 'contact':
         return <Contact />;
-      case 'home_manager': // New case for home management
-        return <HomeManager />;
+      
       default:
         return <Users />;
     }
@@ -37,7 +36,7 @@ const AdminDashboard = () => {
         <div className="p-4 text-2xl font-bold">Admin Dashboard</div>
         <nav>
           <ul>
-            <li><div className="py-2 px-4" onClick={() => setActiveComp('home_manager')}>Home Management</div></li>
+            {/* <li><div className="py-2 px-4" onClick={() => setActiveComp('home_manager')}>Home Management</div></li> */}
             <li><div className="py-2 px-4" onClick={() => setActiveComp('users')}>Users</div></li>
             <li><div className="py-2 px-4" onClick={() => setActiveComp('discussions')}>Discussions</div></li>
             <li><div className="py-2 px-4" onClick={() => setActiveComp('events')}>Events</div></li>

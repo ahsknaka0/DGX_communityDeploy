@@ -8,8 +8,6 @@ import 'react-quill/dist/quill.snow.css';
 import ApiContext from '../../context/ApiContext.jsx';
 import { compressImage } from '../../utils/compressImage.js';
 
-
-
 const eventColors = {
     workshop: '#013D54',
     event: '#76B900',
@@ -36,7 +34,6 @@ const EventTable = () => {
     const [selectedEvent, setSelectedEvent] = useState(null);
     const [errors, setErrors] = useState({});
     const fileInputRef = useRef(null);
-
     // Create refs for input fields
     const titleRef = useRef(null);
     const startRef = useRef(null);
@@ -48,6 +45,21 @@ const EventTable = () => {
     const descriptionRef = useRef(null);
     const registerLinkRef = useRef(null);
 
+
+    useEffect(() => {
+        const fetchEvents = async () => {
+            const response = await fetch("/api/getEvents"); // Replace with your API endpoint
+            const data = await response.json();
+            setEvents(data);
+        };
+        fetchEvents();
+    }, []);
+
+    const addEvent = async () => {
+        const response = await fetch("/api/addEvent", { method: 'POST' }); // Add data to the event
+        const result = await response.json();
+        setEvents(prevEvents => [...prevEvents, result]); // Add the new event to the table
+    };
     const handleFileChange = (e) => {
         const file = e.target.files[0];
         if (file) {
@@ -81,7 +93,7 @@ const EventTable = () => {
 
 
 
-    const handleSubmit = async () => {
+    const handleSubmit = async (events) => {
         const errors = {};
 
         // Validate form fields
@@ -158,7 +170,6 @@ const EventTable = () => {
             }
         } catch (error) {
             console.error('Error adding event:', error);
-            // alert('An error occurred while adding the event. Please try again.');
         }
     };
 
@@ -204,6 +215,8 @@ const EventTable = () => {
                     Add Event
                 </button>
             </div>
+
+            
 
             {isModalOpen && (
                 <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-70 z-50">
@@ -352,7 +365,11 @@ const EventTable = () => {
                                 Cancel
                             </button>
                             <button
-                                onClick={handleSubmit}
+                                onClick={async (events) => {
+                                    await handleSubmit(events);  // Ensure handleSubmit is completed
+                                    await addEvent();
+                                }
+                            }
                                 className="bg-DGXgreen text-white p-2 rounded"
                             >
                                 Add Event

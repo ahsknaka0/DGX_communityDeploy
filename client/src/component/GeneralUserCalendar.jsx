@@ -4,7 +4,7 @@ import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import Skeleton from 'react-loading-skeleton'; // Import Skeleton
 import 'react-loading-skeleton/dist/skeleton.css'; // Import Skeleton styles
-import { images } from '../constant/index.js'; // Make sure images are available
+// import { images } from '../constant/index.js'; // Make sure images are available
 
 const localizer = momentLocalizer(moment);
 
@@ -49,14 +49,13 @@ const GeneralUserCalendar = ({ events }) => {
       },
     };
   };
-  
 
+ 
   return (
     <div className="container mx-auto mt-10">
       <div className="mb-5">
         <h1 className=" flex items-center justify-center text-2xl font-bold mb-4">Our Event and Workshop Calendar</h1>
       </div>
-
       {isLoading ? (
         <Skeleton height={600} className="bg-gray-200 rounded-lg mb-10" />
       ) : (
@@ -72,7 +71,6 @@ const GeneralUserCalendar = ({ events }) => {
           onSelectEvent={handleSelectEvent}
         />
       )}
-
       {selectedEvent && (
         <div id="event-detail" className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
           <div className="bg-white rounded-lg shadow-lg p-5 max-w-3xl w-full max-h-[90vh] overflow-y-auto z-50">

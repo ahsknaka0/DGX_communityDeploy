@@ -14,12 +14,15 @@ import { compressImage } from '../utils/compressImage.js';
 
 
 const eventColors = {
-  workshop: '#013D54', 
-  event: '#76B900',    
+  workshop: '#013D54',
+  event: '#76B900',
 };
+
+
+
 const EventTable = () => {
   const localizer = momentLocalizer(moment);
-  const { fetchData, userToken} = useContext(ApiContext);      
+  const { fetchData, userToken } = useContext(ApiContext);
   const [events, setEvents] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newEvent, setNewEvent] = useState({
@@ -35,6 +38,38 @@ const EventTable = () => {
     registerLink: '', // Add registerLink to state
   });
 
+  
+  useEffect(() => {
+    const fetchEvents = async () => {
+      const endpoint = "eventandworkshop/getEvent"; // Adjust the endpoint to your API
+      const method = "GET";
+      const headers = {
+        'Content-Type': 'application/json',
+      };
+
+      try {
+        const result = await fetchData(endpoint, method, {}, headers);
+        if (result.success) {
+          setEvents(result.data);
+        } else {
+          setError(result.message || 'Failed to fetch event data');
+        }
+      } catch (error) {
+        console.error("Error fetching events:", error);
+        setError('Failed to fetch event data');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchEvents();
+  }, [fetchData]);
+
+  // Conditional rendering
+  // if (loading) return <div>Loading events...</div>;
+  // if (error) return <div>Error: {error}</div>;
+
+
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [errors, setErrors] = useState({});
   const fileInputRef = useRef(null);
@@ -49,6 +84,9 @@ const EventTable = () => {
   const hostRef = useRef(null);
   const descriptionRef = useRef(null);
   const registerLinkRef = useRef(null);
+
+
+ 
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -70,7 +108,7 @@ const EventTable = () => {
     setNewEvent({ ...newEvent, description: value });
   };
 
- 
+
   const handleImageChange = async (e) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
@@ -85,6 +123,8 @@ const EventTable = () => {
 
   const handleSubmit = async () => {
     const errors = {};
+
+
 
     // Validate form fields
     if (!newEvent.title) errors.title = 'Event title is required.';
@@ -138,7 +178,7 @@ const EventTable = () => {
       poster: newEvent.poster, // Ensure you handle the poster appropriately
       description: newEvent.description,
     };
-    
+
 
     try {
       const data = await fetchData(endpoint, method, body, headers);
@@ -191,8 +231,8 @@ const EventTable = () => {
 
   return (
 
- 
-<div className="container mx-auto mt-10">
+
+    <div className="container mx-auto mt-10">
       <div>
         <h1 className='flex justify-center items-center font-bold text-3xl mb-10'>Events and Workshops Calendar</h1>
         <p className="mt-1 flex text-md justify-center items-center font-normal text-gray-500 dark:text-gray-400">Browse and manage discussions in the DGX community.</p>
@@ -205,6 +245,37 @@ const EventTable = () => {
         >
           Add Event
         </button>
+      </div>
+
+      <div className="event-table">
+        <table className="table-auto w-full mt-4">
+          <thead>
+            <tr>
+              <th className="px-4 py-2">Title</th>
+              <th className="px-4 py-2">Start Date</th>
+              <th className="px-4 py-2">End Date</th>
+              <th className="px-4 py-2">Category</th>
+              <th className="px-4 py-2">Venue</th>
+              <th className="px-4 py-2">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {events.map((event, index) => (
+              <tr key={index}>
+                <td className="px-4 py-2">{event.EventTitle}</td>
+                <td className="px-4 py-2">{new Date(event.StartDate).toLocaleDateString()}</td>
+                <td className="px-4 py-2">{new Date(event.EndDate).toLocaleDateString()}</td>
+                <td className="px-4 py-2">{event.Category}</td>
+                <td className="px-4 py-2">{event.Venue}</td>
+                <td className="px-4 py-2">
+                  {/* Add actions like Edit or Delete */}
+                  <button onClick={() => handleEditEvent(event)}>Edit</button>
+                  <button onClick={() => handleDeleteEvent(event)}>Delete</button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
 
       {isModalOpen && (
@@ -354,7 +425,11 @@ const EventTable = () => {
                 Cancel
               </button>
               <button
-                onClick={handleSubmit}
+                onClick={async (events) => {
+                  await handleSubmit(events);  // Ensure handleSubmit is completed
+                  // await addEventTable();
+                }
+                }
                 className="bg-DGXgreen text-white p-2 rounded"
               >
                 Add Event
@@ -365,7 +440,7 @@ const EventTable = () => {
       )}
 
     </div>
-  
+
   );
 };
 
