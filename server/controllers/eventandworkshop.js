@@ -137,7 +137,7 @@ export const getEvent = async (req, res) => {
         res.status(500).json({ success: false, data: err, message: errorMessage });
         return;
       }
-      try { 
+      try {
         const EventWorkshopGetQuery = `SELECT EventID, EventTitle, AuthAdd as UserName, StartDate, EndDate, EventType, Venue, RegistrationLink, EventDescription, Category, AddOnDt as timestamp, EventImage FROM Community_Event WHERE ISNULL(delStatus, 0) = 0  ORDER BY AddOnDt DESC`;
         const EventWorkshopGet = await queryAsync(conn, EventWorkshopGetQuery);
         success = true;

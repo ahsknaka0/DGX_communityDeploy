@@ -5,6 +5,7 @@ import dotenv from 'dotenv'
 import userRoutes from './routes/user.js'
 import userDiscussion from './routes/Discussion.js'
 import userEvent from './routes/EventAndWorkshop.js'
+import userBlog from './routes/Blog.js'
 // import helmet from 'helmet'
 // import { connectToDatabase, closeConnection } from './db.js';
 
@@ -24,6 +25,7 @@ app.use(bodyParser.urlencoded({ extended: true, limit: '10mb' }));
 app.use('/user', userRoutes);
 app.use('/discussion', userDiscussion)
 app.use('/eventandworkshop', userEvent)
+app.use('/blog', userBlog)
 
 
 app.listen(port, () => {
