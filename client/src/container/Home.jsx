@@ -1,5 +1,5 @@
 import React from 'react';
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { images } from '../constant/index.js';
 import { useNavigate } from 'react-router-dom';
 import { useState, useContext, useEffect } from 'react';
@@ -9,11 +9,7 @@ import HomeAfterLoginComponent from '../component/HomeAfterLoginComponent.jsx';
 import { TextParallax } from '../component/TextParallax.jsx'; // Adjust the path as needed
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
-
-
-
-
-
+import LogoMarquee from '../component/LogoMarquee.jsx';
 
 const Home = () => {
 
@@ -85,11 +81,33 @@ const Home = () => {
         // Add more image paths as needed
     ];
 
+    const usSlides = [
+        images.us1,
+        images.us2,
+        images.us3,
+        images.us4,
+        images.us5,
+        images.us6,
+        images.us7,
+        images.us9
+    ]
+
+    const [currentIndexUS, setCurrentIndexUS] = useState(0);
+
+    // Automatic slider functionality for 
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setCurrentIndexUS((prevIndex) => (prevIndex === usSlides.length - 1 ? 0 : prevIndex + 1));
+        }, 3000); 
+
+        return () => clearInterval(interval);
+    }, [usSlides.length]);
+
     // Automatic slider functionality
     useEffect(() => {
         const interval = setInterval(() => {
             setCurrentIndex((prevIndex) => (prevIndex === slides.length - 1 ? 0 : prevIndex + 1));
-        }, 2000); // Change slide every 2 seconds
+        }, 3000);
 
         return () => clearInterval(interval);
     }, [slides.length]);
@@ -118,11 +136,17 @@ const Home = () => {
                         <div className="text-center">
                             <div className="mb-8 flex justify-center">
                                 <h1 className="text-6xl font-mono px-4 py-1.5 text-DGXwhite">
-                                    Welcome {user.Name.toUpperCase()}
+                                    Welcome{' '}
+                                    <Link
+                                        to="/UserProfile" // Replace with the actual path to the UserProfile page
+                                        className="text-DGXgreen font-extrabold underline hover:text-DGXwhite"
+                                    >
+                                        {user.Name.toUpperCase()}
+                                    </Link>
                                 </h1>
                             </div>
                             <div className="mx-auto max-w-2xl">
-                                <h1 className="text-4xl font-bold tracking-tight text-DGXwhite sm:text-4xl">
+                                <h1 className="text-4xl font-medium tracking-tight text-DGXwhite sm:text-4xl">
                                     DGX - COMMUNITY
                                 </h1>
                                 <p className="mt-6 text-lg leading-8 text-DGXwhite">
@@ -170,8 +194,76 @@ const Home = () => {
                                 </p>
                             </div>
                         </div>
-                        {/* Image and Text Section */}
-                        <img src={images.GIF} alt='gif' className='rounded-lg shadow-md shadow-slate-400 ' />
+                        {/* About Us Carousel Section */}
+                        <div className="relative w-full h-52 md:h-[400px] lg:h-[400px] rounded-lg overflow-hidden">
+                            <div className="relative h-full">
+                                {usSlides.map((slide, index) => (
+                                    <div
+                                        key={index}
+                                        className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${index === currentIndexUS ? 'opacity-100' : 'opacity-0'}`}
+                                    >
+                                        <img
+                                            src={slide}
+                                            alt={`US Slide ${index}`}
+                                            // Optionally use object-fit styles
+                                            className="object-fill w-full h-full"
+                                        />
+                                    </div>
+                                ))}
+                            </div>
+
+                            {/* Previous Button */}
+                            <button
+                                type="button"
+                                className="absolute top-1/2 left-0 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none transform -translate-y-1/2"
+                                onClick={prevSlide}
+                            >
+                                <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-DGXwhite/30 group-hover:bg-DGXwhite/50">
+                                    <svg
+                                        className="w-4 h-4 text-DGXwhite"
+                                        aria-hidden="true"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        fill="none"
+                                        viewBox="0 0 6 10"
+                                    >
+                                        <path
+                                            stroke="currentColor"
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            strokeWidth="2"
+                                            d="M5 1 1 5l4 4"
+                                        />
+                                    </svg>
+                                    <span className="sr-only">Previous</span>
+                                </span>
+                            </button>
+
+                            {/* Next Button */}
+                            <button
+                                type="button"
+                                className="absolute top-1/2 right-0 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none transform -translate-y-1/2"
+                                onClick={nextSlide}
+                            >
+                                <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-DGXwhite/30 group-hover:bg-DGXwhite/50">
+                                    <svg
+                                        className="w-4 h-4 text-DGXwhite"
+                                        aria-hidden="true"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        fill="none"
+                                        viewBox="0 0 6 10"
+                                    >
+                                        <path
+                                            stroke="currentColor"
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            strokeWidth="2"
+                                            d="m1 9 4-4-4-4"
+                                        />
+                                    </svg>
+                                    <span className="sr-only">Next</span>
+                                </span>
+                            </button>
+                        </div>
 
                     </div>
                 </section>
@@ -287,65 +379,11 @@ const Home = () => {
                     <h1 className="text-center text-2xl font-bold leading-8 text-DGXblue">
                         NVIDIA DGX systems are at the forefront of AI research and innovation. Trusted by the world&apos;s most innovative universities and corporations, DGX provides the computational power needed to tackle the most complex AI challenges. Whether advancing research in academic institutions or driving breakthroughs in industry, DGX stands as the premier choice for those leading the charge in artificial intelligence.
                     </h1>
-                    <div className="mx-auto mt-10 flex flex-wrap gap-10 items-center justify-center">
-                        <div className="flex justify-center items-center w-full sm:w-auto">
-                            <img
-                                alt="Transistor"
-                                src={images.ABESIT}
-                                className="w-44 h-24 object-contain"
-                            />
-                        </div>
-                        <div className="flex justify-center items-center w-full sm:w-auto">
-                            <img
-                                alt="Reform"
-                                src={images.KIET}
-                                className="w-44 h-24 object-contain"
-                            />
-                        </div>
-                        <div className="flex justify-center items-center w-full sm:w-auto">
-                            <img
-                                alt="SavvyCal"
-                                src={images.glogo}
-                                className="w-44 h-24 object-contain"
-                            />
-                        </div>
-                        <div className="flex justify-center items-center w-full sm:w-auto">
-                            <img
-                                alt="Tuple"
-                                src={images.SHARDA}
-                                className="w-44 h-24 object-contain"
-                            />
-                        </div>
-                        <div className="flex justify-center items-center w-full sm:w-auto">
-                            <img
-                                alt="utu"
-                                src={images.utu}
-                                className="w-44 h-24 object-contain"
-                            />
-                        </div>
-                        <div className="flex justify-center items-center w-full sm:w-auto">
-                            <img
-                                alt="rvce"
-                                src={images.rvce}
-                                className="w-44 h-24 object-contain"
-                            />
-                        </div>
-                        <div className="flex justify-center items-center w-full sm:w-auto">
-                            <img
-                                alt="glbajaj"
-                                src={images.GLBAJAJ}
-                                className="w-44 h-24 object-contain"
-                            />
-                        </div>
-                        <div className="flex justify-center items-center w-full sm:w-auto">
-                            <img
-                                alt="BMS"
-                                src={images.BMS}
-                                className="w-44 h-24 object-contain"
-                            />
-                        </div>
-                    </div>
+                    
                 </div>
+                <div className="mt-10 flex items-center justify-center">
+                        <LogoMarquee />
+                    </div>
             </div>
 
 

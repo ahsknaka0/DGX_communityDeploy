@@ -113,6 +113,7 @@ const GeneralUserCalendar = ({ events }) => {
               >
                 Close
               </button>
+              
             </div>
           </div>
         </div>

@@ -102,7 +102,7 @@ const ForgotPassword = () => {
         </div>
       </div>
       {/* Right side with background image */}
-      <div className="lg:w-1/2 hidden lg:flex justify-center items-center lg:pl-1">
+      <div className="lg:w-3/4  hidden lg:flex justify-center items-center lg:pl-1">
         <img
           src={images.secure}
           alt="Background"

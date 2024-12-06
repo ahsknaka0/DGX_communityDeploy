@@ -146,7 +146,7 @@ const SignIn = () => {
     <div className="min-h-screen flex flex-col lg:flex-row items-center justify-center bg-gray-100">
       <ToastContainer />
       {/* Background image for large screens */}
-      <div className="lg:w-4/6 hidden lg:flex justify-start items-center p-4 lg:pl-40">
+      <div className="lg:w-3/4 xl:w-4/5 2xl:w-4/5 hidden lg:flex justify-start items-center p-4 lg:pl-40">
         <img
           src={images.secure}
           alt="Background"

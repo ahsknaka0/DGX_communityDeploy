@@ -7,6 +7,7 @@ export default {
         'custom-lg': { 'max': '1400px' },
         'xs': { 'max': '450px' },
       },
+
       colors: {
         'DGXgreen': '#76B900',
         'DGXblue': '#013D54',
@@ -28,11 +29,16 @@ export default {
           '50%': { opacity: '0.5' },
           '100%': { opacity: '1' },
         },
+        scroll: {
+          '0%': { transform: 'translateX(100%)' },
+          '100%': { transform: 'translateX(-100%)' },
+        },
       },
       animation: {
         spin: 'spin 1s linear infinite',
         'spin-reverse': 'spin-reverse 1s linear infinite',
         pulse: 'pulse 1s infinite',
+        scroll: 'scroll 15s linear infinite',
       },
       backgroundImage: theme => ({
         'dgx-gradient': `linear-gradient(135deg, ${theme('colors.DGXblue')}, ${theme('colors.DGXgreen')})`,

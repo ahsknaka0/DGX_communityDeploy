@@ -9,6 +9,8 @@ import { AiFillLike, AiOutlineLike, AiOutlineComment } from "react-icons/ai";
 import { useCallback } from 'react';
 import Skeleton from 'react-loading-skeleton'; // Import Skeleton
 import 'react-loading-skeleton/dist/skeleton.css'; // Import Skeleton styles
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 
 const Discussion = () => {
   const { fetchData, userToken, user } = useContext(ApiContext);
@@ -569,13 +571,22 @@ const Discussion = () => {
                   <label className="block text-gray-700 font-bold mb-2" htmlFor="content">
                     Content <span className="text-red-500">*</span>
                   </label>
-                  <textarea
+                  <ReactQuill
                     id="content"
-                    className="w-full px-3 py-2 border rounded-lg"
-                    rows="4"
+                    theme="snow"
                     value={content}
-                    onChange={(e) => setContent(e.target.value)}
-                    required
+                    onChange={setContent}
+                    className="border rounded-lg"
+                    modules={{
+                      toolbar: [
+                        [{ header: [1, 2, 3, false] }],
+                        ["bold", "italic", "underline", "strike"],
+                        ["blockquote", "code-block"],
+                        [{ list: "ordered" }, { list: "bullet" }],
+                        ["link", "formula"],
+                        ["clean"],
+                      ]
+                    }}
                   />
                 </div>
 

@@ -5,10 +5,36 @@ import { AiFillLike, AiOutlineLike } from "react-icons/ai"
 import ApiContext from '../context/ApiContext.jsx';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import ReactQuill from "react-quill";
+import DOMPurify from "dompurify";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { materialLight } from "react-syntax-highlighter/dist/esm/styles/prism";
 
 const DiscussionModal = ({ isOpen, onRequestClose, discussion }) => {
   const [dissComments, setDissComments] = useState([]);
   const [demoDiscussions, setDemoDiscussions] = useState([]);
+
+  const [content, setContent] = useState("");
+
+  const sanitizeAndHighlight = (html) => {
+    const sanitizedContent = DOMPurify.sanitize(html);
+
+    const div = document.createElement("div");
+    div.innerHTML = sanitizedContent;
+
+    div.querySelectorAll("pre").forEach((block) => {
+      const code = block.innerText;
+      block.innerHTML = ""; // Clear content
+      const highlightedCode = (
+        <SyntaxHighlighter language="javascript" style={materialLight}>
+          {code}
+        </SyntaxHighlighter>
+      );
+      block.appendChild(highlightedCode);
+    });
+
+    return div.innerHTML;
+  };
 
   const [newComment, setNewComment] = useState("");
   const [replyTexts, setReplyTexts] = useState({});
@@ -334,10 +360,28 @@ const DiscussionModal = ({ isOpen, onRequestClose, discussion }) => {
                     </div>
                   )}
 
-                  {/* Content */}
-                  {discussion.Content && (
-                    <div className="mb-2 sm:mb-4">{discussion.Content}</div>
-                  )}
+                <ReactQuill
+                        theme="snow"
+                        modules={{
+                          toolbar: [
+                            [{ header: [1, 2, 3, false] }],
+                            ["bold", "italic", "underline"],
+                            [{ list: "ordered" }, { list: "bullet" }],
+                            ["code-block"],
+                            ["link", "image"],
+                            ["clean"],
+                          ],
+                        }}
+                        onChange={(value) => setContent(value)}
+                      />
+
+                      <div
+                        className="mt-4"
+                        dangerouslySetInnerHTML={{
+                          __html: sanitizeAndHighlight(discussion.content),
+                        }}
+                      />
+                   
 
                   {/* Tags */}
                   {discussion.Tag && (

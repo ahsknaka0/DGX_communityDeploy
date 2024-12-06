@@ -13,6 +13,7 @@ const HomeAfterLoginComponent = () => {
     const [quote, setQuote] = useState('');
     const [author, setAuthor] = useState("");
     const [loading, setLoading] = useState(true);
+    
 
     const images = [
         'https://i.imgur.com/FFQKx5h.jpeg',
@@ -55,7 +56,6 @@ const HomeAfterLoginComponent = () => {
         return <div>Loading...</div>;
     }
 
-
     return (
         <>
             {/* Welcome Section
@@ -76,7 +76,17 @@ const HomeAfterLoginComponent = () => {
 
             {/* Dashboard Highlights */}
             <section className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                {/* Quote of the Day */}
+                <div className="bg-white shadow-lg rounded-lg p-6">
+                    <div className="mt-6">
+                        <h2 className="text-xl font-bold  text-DGXblue">Quote of the Day:</h2>
+                        <blockquote className="italic font-semibold font-mono mt-4 text-DGXgreen">"{quote}"</blockquote>
+                        <p className="mt-2 font-mono text-right text-DGXblue">- <span className='underline'>{author}</span></p>
+                    </div>
+                </div>
+                
                 {/* Upcoming Events */}
+                
                 <div className="bg-white shadow-lg rounded-lg p-6">
                     <h2 className="text-xl font-semibold text-gray-800 mb-4">Upcoming Events</h2>
                     <ul className="space-y-4">
@@ -85,25 +95,16 @@ const HomeAfterLoginComponent = () => {
                                 <p className="text-gray-700 font-medium">Event 1: AI Workshop</p>
                                 <p className="text-gray-500 text-sm">Dec 1, 2024 | 10:00 AM</p>
                             </div>
-                            <button className="text-blue-600 font-medium hover:underline">Join</button>
+                            <button className="text-blue-600 font-medium hover:underline">View</button>
                         </li>
                         <li className="flex justify-between items-center">
                             <div>
                                 <p className="text-gray-700 font-medium">Event 2: Community Meetup</p>
                                 <p className="text-gray-500 text-sm">Dec 5, 2024 | 3:00 PM</p>
                             </div>
-                            <button className="text-blue-600 font-medium hover:underline">Join</button>
+                            <button className="text-blue-600 font-medium hover:underline">View</button>
                         </li>
                     </ul>
-                </div>
-
-                {/* Quote of the Day */}
-                <div className="bg-white shadow-lg rounded-lg p-6">
-                    <div className="mt-6">
-                        <h2 className="text-xl font-bold">Quote of the Day:</h2>
-                        <blockquote className="italic mt-4">"{quote}"</blockquote>
-                        <p className="mt-2 text-right">- {author}</p>
-                    </div>
                 </div>
 
             </section>
@@ -234,8 +235,6 @@ const HomeAfterLoginComponent = () => {
                     </div>
                 </div>
             </div>
-
-
 
             <div className="bg-white py-24 sm:py-32">
                 <div className="mx-auto max-w-7xl px-6 lg:px-8">

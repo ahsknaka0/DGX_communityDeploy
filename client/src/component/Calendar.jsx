@@ -119,8 +119,6 @@ const EventTable = () => {
     }
   };
 
-
-
   const handleSubmit = async () => {
     const errors = {};
 

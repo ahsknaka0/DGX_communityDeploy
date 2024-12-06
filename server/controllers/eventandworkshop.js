@@ -1,7 +1,7 @@
-import { body, validationResult } from 'express-validator';
-import { connectToDatabase, closeConnection } from '../database/mySql.js';
-import dotenv from 'dotenv';
-import { queryAsync, logError, logInfo, logWarning } from '../helper/index.js';
+import { body, validationResult } from "express-validator";
+import { connectToDatabase, closeConnection } from "../database/mySql.js";
+import dotenv from "dotenv";
+import { queryAsync, logError, logInfo, logWarning } from "../helper/index.js";
 
 dotenv.config();
 
@@ -14,15 +14,15 @@ export const addEvent = async (req, res) => {
   // Validate request data
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-
     const warningMessage = "Data is not in the right format";
     logWarning(warningMessage); // Log the warning
-    res.status(400).json({ success, data: errors.array(), message: warningMessage });
+    res
+      .status(400)
+      .json({ success, data: errors.array(), message: warningMessage });
     return;
   }
 
   try {
-
     // Destructure form data
     // console.log("hi",req.body)
     // let data = JSON.parse(req.body)
@@ -36,7 +36,7 @@ export const addEvent = async (req, res) => {
       host,
       registerLink,
       poster,
-      description
+      description,
     } = req.body;
 
     // console.log(title,start,end,category,companyCategory,venue,host,registerLink,description)
@@ -56,7 +56,9 @@ export const addEvent = async (req, res) => {
       if (err) {
         const errorMessage = "Failed to connect to database";
         logError(err); // Log the error
-        res.status(500).json({ success: false, data: err, message: errorMessage });
+        res
+          .status(500)
+          .json({ success: false, data: err, message: errorMessage });
         return;
       }
 
@@ -88,7 +90,7 @@ export const addEvent = async (req, res) => {
             registerLink,
             poster, // You may need to handle file upload separately, storing the file URL or path
             description,
-            rows[0].Name // AuthAdd (user who added the event)
+            rows[0].Name, // AuthAdd (user who added the event)
           ]);
 
           console.log("last hai", insertEvent);
@@ -106,26 +108,35 @@ export const addEvent = async (req, res) => {
           res.status(200).json({
             success,
             data: { eventId: lastInsertedId[0].EventID },
-            message: infoMessage
+            message: infoMessage,
           });
         } else {
           closeConnection();
           const warningMessage = "User not found, please login first.";
           logWarning(warningMessage);
-          res.status(400).json({ success: false, data: {}, message: warningMessage });
+          res
+            .status(400)
+            .json({ success: false, data: {}, message: warningMessage });
         }
       } catch (queryErr) {
         closeConnection();
         logError(queryErr);
-        res.status(500).json({ success: false, data: queryErr, message: 'Something went wrong, please try again' });
+        res.status(500).json({
+          success: false,
+          data: queryErr,
+          message: "Something went wrong, please try again",
+        });
       }
     });
   } catch (error) {
     logError(error);
-    res.status(500).json({ success: false, data: {}, message: 'Something went wrong, please try again' });
+    res.status(500).json({
+      success: false,
+      data: {},
+      message: "Something went wrong, please try again",
+    });
   }
 };
-
 
 export const getEvent = async (req, res) => {
   let success = false;
@@ -134,7 +145,9 @@ export const getEvent = async (req, res) => {
       if (err) {
         const errorMessage = "Failed to connect to database";
         logError(err);
-        res.status(500).json({ success: false, data: err, message: errorMessage });
+        res
+          .status(500)
+          .json({ success: false, data: err, message: errorMessage });
         return;
       }
       try {
@@ -144,17 +157,25 @@ export const getEvent = async (req, res) => {
         closeConnection();
         const infoMessage = "Event and Workshop Got Successfully";
         logInfo(infoMessage);
-        res.status(200).json({ success, data: EventWorkshopGet, message: infoMessage });
-      }
-      catch (queryErr) {
+        res
+          .status(200)
+          .json({ success, data: EventWorkshopGet, message: infoMessage });
+      } catch (queryErr) {
         logError(queryErr);
         closeConnection();
-        res.status(500).json({ success: false, data: queryErr, message: 'Something went wrong please try again' });
+        res.status(500).json({
+          success: false,
+          data: queryErr,
+          message: "Something went wrong please try again",
+        });
       }
-    })
-  }
-  catch (error) {
+    });
+  } catch (error) {
     logError(error);
-    res.status(500).json({ success: false, data: {}, message: 'Something went wrong please try again' });
+    res.status(500).json({
+      success: false,
+      data: {},
+      message: "Something went wrong please try again",
+    });
   }
-} 
+};

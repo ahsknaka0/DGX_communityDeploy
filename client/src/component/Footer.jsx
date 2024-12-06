@@ -11,10 +11,10 @@ const Footer = () => {
             </a>
             <div className="text-center lg:text-left">
               <div className="text-sm tracking-wide mt-2 lg:mt-0">
-                <p>Community Guideline | Manage My Privacy | Do Not Sell or Share My Data | Legal | Accessibility | Corporate Policies | Product Security | Contact</p>
+                <p>Community Guideline | Manage My Privacy | Do Not Sell or Share Our Data | Legal | Accessibility | Corporate Policies | Product Security | Contact</p>
               </div>
               <div className="text-sm font-poppins tracking-wide mt-1">
-                <p>Copyright @ 2024 GI Corporation</p>
+                <p>Copyright © 2024 Global Infoventures Pvt. Ltd. All rights reserved.</p>
               </div>
             </div>
           </div>

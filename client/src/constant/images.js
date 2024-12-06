@@ -17,9 +17,9 @@ import Globe from '../assets/Globe.jpg'
 import DGX from '../assets/DGX.png'
 import AnimatedDGX from '../assets/AnimatedDGX.png'
 import ABESIT from '../assets/ABESIT.png'
-import KIET from '../assets/KIET.png'
-import SHARDA from '../assets/SHARDA.png'
-import GLBAJAJ from '../assets/GLBAJAJ.png'
+// import KIET from '../assets/KIET.png'
+// import SHARDA from '../assets/SHARDA.png'
+// import GLBAJAJ from '../assets/GLBAJAJ.png'
 import SharadSir from '../assets/SharadSir.png'
 import PatrickSir from '../assets/PatrickSir.png'
 
@@ -39,14 +39,24 @@ import Certificate2 from '../assets/Certificate2.png'
 
 import glogo from '../assets/glogo.png'
 import gilogowhite from '../assets/gilogowhite.png'
-import rvce from '../assets/rvce.png'
-import utu from '../assets/utu.png'
-import BMS from '../assets/BMS.png'
+// import rvce from '../assets/RVU_logo.png'
+// import utu from '../assets/utu.png'
+// import BMS from '../assets/BMS.png'
 
 import aisummit from '../assets/aisummit.png'
 import Design from '../assets/Design.png'
 
-import GIF from '../assets/gif.gif'
+
+
+import us1 from '../assets/us1.jpg'
+import us2 from '../assets/us2.jpg'
+import us3 from '../assets/us3.jpg'
+import us4 from '../assets/us4.jpeg'
+import us5 from '../assets/us5.jpg'
+import us6 from '../assets/us6.jpg'
+import us7 from '../assets/us7.jpg'
+import us8 from '../assets/us8.jpg'
+import us9 from '../assets/us9.jpg'
 
 
 
@@ -73,9 +83,9 @@ export default {
     DGX,
     AnimatedDGX,
     ABESIT,
-    KIET,
-    SHARDA,
-    GLBAJAJ,
+    // KIET,
+    // SHARDA,
+    // GLBAJAJ,
     SharadSir,
     SugandhMaam,
     PatrickSir,
@@ -94,11 +104,19 @@ export default {
     glogo,
     gilogowhite,
 
-    rvce,
-    BMS,
-    utu,
+    // rvce,
+    // BMS,
+    // utu,
     aisummit,
     Design,
-    GIF
+    us1,
+    us2,
+    us3,
+    us4,
+    us5,
+    us6,
+    us7,
+    us8,
+    us9,
 
 }

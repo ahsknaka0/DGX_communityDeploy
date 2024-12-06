@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { TbUserSquareRounded } from "react-icons/tb";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
+import BlogImage from "../component/BlogImage";
 
 
 
@@ -15,20 +16,6 @@ const BlogPage = () => {
     const [showAll, setShowAll] = useState(false);
     const [selectedBlog, setSelectedBlog] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
-
-    const [currentImageIndex, setCurrentImageIndex] = useState(0);
-    const images = [
-        "public/bg1.jpg",
-        "public/bg2.jpg",
-        "public/bg3.jpg",
-    ];
-
-    // useEffect(() => {
-    //     const interval = setInterval(() => {
-    //         setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
-    //     },5000);
-    //     return () => clearInterval(interval);
-    // }, [images.length]);
 
     useEffect(() => {
         fetch('blogsData.json')
@@ -98,14 +85,17 @@ const BlogPage = () => {
                             </p>
                             <p className="mb-4 text-sm text-gray-500 text-center">Published: {published_date}</p>
                             <p className="text-lg text-justify">{content}</p>
+                            
                         </div>
-                        {/* Close button at the end */}
-                        <button
-                            className="m-6 bg-DGXblue text-white px-6 py-2 rounded-lg hover:bg-red-600"
-                            onClick={closeModal}
-                        >
-                            Close
-                        </button>
+                
+                        <div>
+                            <button
+                                className="m-6 bg-DGXblue text-white px-6 py-2 rounded-lg hover:bg-red-"
+                                onClick={closeModal}
+                            >
+                                Close
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -114,28 +104,7 @@ const BlogPage = () => {
 
     return (
         <div>
-            <div
-                className="py-20 md:py-40 bg-black text-center text-DGXgreen px-4 relative"
-                style={{
-                    backgroundImage: `url(${images[currentImageIndex]})`,
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center',
-                    transition: 'background-image 1s ease-in-out',
-                }}
-            >
-                <div className="absolute inset-0 bg-black opacity-50"></div>
-                <div className="relative z-10">
-                    <h1 className="text-3xl md:text-5xl lg:text-7xl font-bold leading-snug mb-5">
-                        Welcome to Our Blog
-                    </h1>
-                    <p className="text-gray-100 lg:w-3/5 mx-auto mb-5 text-sm md:text-base">
-                        Start your blog today and join a community of writers and readers who are passionate about
-                        sharing their stories and ideas. We offer everything you need to get started, from helpful tips
-                        and tutorials.
-                    </p>
-                </div>
-            </div>
-
+            <BlogImage />
             <div className="flex justify-center items-center flex-wrap gap-3">
                 <div className=" flex items-center justify-center flex-wrap p-4 space-x-2 space-y-2" >
                     <button
