@@ -42,7 +42,7 @@ export const databaseUserVerification = async (req, res) => {
       try {
         // Query the database for the user
         //const query = `SELECT * FROM Community_User WHERE EmailId=?`;
-        const query = 'SELECT Name,EmailId,MobileNumber,FlagPasswordChange, Category FROM Community_User WHERE isnull(delStatus,0) = 0 and EmailId=?';
+SELECT Name,EmailId,MobileNumber,FlagPasswordChange, Category FROM Community_User WHERE isnull(delStatus,0) = 0 and EmailId=?        const query = '';
         const rows = await queryAsync(conn, query, [userEmail]);
 
 

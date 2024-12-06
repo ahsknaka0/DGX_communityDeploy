@@ -9,25 +9,10 @@ const BlogForm = () => {
   const [content, setContent] = useState('');
   const [image, setImage] = useState(null);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
 
-    // Form submission logic here
-    console.log({
-      title,
-      author,
-      publishedDate,
-      content,
-      image,
-    });
 
-    // Reset form fields after submission
-    setTitle('');
-    setAuthor('');
-    setPublishedDate('');
-    setContent('');
-    setImage(null);
-  };
+
+ 
 
   return (
     <form onSubmit={handleSubmit} className=" mx-auto mt-4 bg-white p-6 rounded shadow border-2">
