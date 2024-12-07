@@ -154,9 +154,10 @@ const SignIn = () => {
         />
       </div>
       {/* Sign in form container */}
-
-      <div className="w-full lg:w-8/14 lg:rounded-l-full h-screen flex justify-center items-center bg-DGXblue mt-4 sm:mt-8 md:mt-12">
-        <div className="w-full max-w-sm lg:max-w-md p-6 bg-DGXwhite rounded-lg shadow-lg border border-DGXgreen">
+      <div className="w-full lg:w-8/12  lg:rounded-l-full h-screen flex justify-center items-center bg-DGXblue mt-4 sm:mt-8 md:mt-12 pt-16">
+        {" "}
+        {/* Added pt-16 to create space for the navbar */}
+        <div className="w-full sm:mt-[100px] max-w-sm lg:max-w-md p-6 bg-DGXwhite rounded-lg shadow-lg border border-DGXgreen">
           <div className="text-center text-3xl mb-4 text-DGXgreen font-bold">
             Sign In
           </div>

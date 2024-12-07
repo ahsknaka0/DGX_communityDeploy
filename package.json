@@ -1,7 +1,16 @@
 {
   "dependencies": {
+    "homepage": ".*",
     "16": "^0.0.2",
     "react-big-calendar": "^1.13.1",
     "react-quill": "^0.0.2"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview"
+  },
+  "devDependencies": {
+    "vite": "^6.0.3"
   }
 }

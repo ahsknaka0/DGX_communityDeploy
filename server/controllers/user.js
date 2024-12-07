@@ -375,6 +375,7 @@ export const login = async (req, res) => {
       try {
         const query =
           "SELECT EmailId, Password, FlagPasswordChange, isAdmin FROM Community_User WHERE isnull(delStatus,0) = 0 AND EmailId = ?";
+
         const result = await queryAsync(conn, query, [email]);
 
         if (result.length === 0) {
