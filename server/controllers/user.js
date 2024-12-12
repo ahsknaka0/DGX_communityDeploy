@@ -28,7 +28,8 @@ export const databaseUserVerification = async (req, res) => {
   // Validate request body
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    const warningMessage = "Data is not in the right format";
+    const warningMessage = "The data format is incorrect. Please ensure it meets the required format and try again.";
+
     logWarning(warningMessage); // Log the warning
     res
       .status(400)
@@ -100,12 +101,56 @@ export const databaseUserVerification = async (req, res) => {
 
                   // Close connection after query execution
                   closeConnection();
-                  const message = `Welcome to DGX Community, Your credentials to Login given bellow.
-                                   User Name: ${userEmail}
-                                   Password: ${password}`;
-                  const htmlContent = `Welcome to DGX Community, Your credentials to Login given bellow.<br/>
-                                   <b>User Name: ${userEmail}</b><br/>
-                                   <b>Password: ${password}</b>`;
+                  const message = `Hello,
+
+                    Welcome to the DGX Community! Below are your login credentials:
+
+                    Username: ${userEmail}
+                    Password: ${password}
+
+                    Please keep your credentials secure and do not share them with anyone. If you encounter any issues, feel free to contact our support team.
+
+                    Best regards,  
+                    The DGX Community Team`;
+
+                    const htmlContent = `<!DOCTYPE html>
+                    <html>
+                    <head>
+                        <style>
+                            .container {
+                                font-family: Arial, sans-serif;
+                                color: #333;
+                                line-height: 1.6;
+                                padding: 20px;
+                            }
+                            .credentials {
+                                margin: 20px 0;
+                                font-size: 16px;
+                            }
+                            .footer {
+                                font-size: 12px;
+                                color: #777;
+                                margin-top: 20px;
+                            }
+                        </style>
+                    </head>
+                    <body>
+                        <div class="container">
+                            <p>Hello,</p>
+                            <p>Welcome to the DGX Community! Below are your login credentials:</p>
+                            <div class="credentials">
+                                <p><b>Username:</b> ${userEmail}</p>
+                                <p><b>Password:</b> ${password}</p>
+                            </div>
+                            <p>Please keep your credentials secure and do not share them with anyone. If you encounter any issues, feel free to contact our support team.</p>
+                            <p>Best regards,<br/>The DGX Community Team</p>
+                            <div class="footer">
+                                <p>This is an automated message. Please do not reply directly to this email.</p>
+                            </div>
+                        </div>
+                    </body>
+                    </html>`;
+                    
                   const mailsent = await mailSender(
                     userEmail,
                     message,
@@ -152,8 +197,9 @@ export const databaseUserVerification = async (req, res) => {
           }
         } else {
           // User not found
-          const warningMessage =
-            "You are not a part of this community. Get a referral from any existing member to join";
+          const warningMessage = 
+            "Access denied. You are not yet a part of this community. Please request a referral from an existing member to join.";
+
           logWarning(warningMessage); // Log the warning
           closeConnection();
           return res
@@ -191,7 +237,8 @@ export const registration = async (req, res) => {
   // Validate request body
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    const warningMessage = "Data is not in the right format";
+    const warningMessage = "The data format is incorrect. Please ensure it meets the required format and try again.";
+
     logWarning(warningMessage); // Log the warning
     return res
       .status(400)
@@ -234,7 +281,8 @@ export const registration = async (req, res) => {
 
         if (existingUsers[0].userEmailCount > 0) {
           // User with this email already exists
-          const warningMessage = "A user with this email already exists";
+          const warningMessage =  "An account with this email address already exists. Please log in or use a different email to register.";
+
           logWarning(warningMessage);
           closeConnection();
           return res
@@ -314,8 +362,8 @@ export const registration = async (req, res) => {
             }
           } while (!success);
         } else {
-          const warningMessage =
-            "This Refer Number not have refer credit left try with different refer code";
+          const warningMessage =  "This referral code has no remaining credits. Please try again with a different referral code.";
+
           logWarning(warningMessage);
           closeConnection();
           return res
@@ -351,7 +399,8 @@ export const login = async (req, res) => {
   // if there are errors, return bad request and the errors
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    const warningMessage = "Data is not in the right format";
+    const warningMessage = "The data format is incorrect. Please ensure it meets the required format and try again.";
+
     logWarning(warningMessage); // Log the warning
     return res
       .status(400)
@@ -444,7 +493,8 @@ export const login = async (req, res) => {
 //   let success = false;
 //   const errors = validationResult(req);
 //   if (!errors.isEmpty()) {
-//     const warningMessage = "Data is not in the right format";
+//     const warningMessage = "The data format is incorrect. Please ensure it meets the required format and try again.";
+
 //     logWarning(warningMessage);
 //     return res.status(400).json({ success, data: errors.array(), message: warningMessage });
 //   }
@@ -517,7 +567,8 @@ export const changePassword = async (req, res) => {
 
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    const warningMessage = "Data is not in the right format";
+    const warningMessage = "The data format is incorrect. Please ensure it meets the required format and try again.";
+
     logWarning(warningMessage); // Log the warning
     return res
       .status(400)
@@ -802,7 +853,8 @@ export const sendInvite = async (req, res) => {
   // Validate request body
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    const warningMessage = "Data is not in the right format";
+    const warningMessage = "The data format is incorrect. Please ensure it meets the required format and try again.";
+
     logWarning(warningMessage); // Log the warning
     return res
       .status(400)
@@ -836,25 +888,47 @@ export const sendInvite = async (req, res) => {
 
           const message = `Welcome to the DGX Community!
 
-          We're excited to have you join us. To complete your registration, please click the link below:
+          Welcome to the DGX Community! We’re thrilled to have you join us. To complete your registration, please click the link below:
 
           Complete your registration: ${registrationLink}
 
-          If you didn't sign up for the DGX Community, feel free to ignore this email.
+          If you did not sign up for the DGX Community, you can safely disregard this email.
 
-          Best regards,
+          Thank you,  
           The DGX Community Team`;
 
-          const htmlContent = `Welcome to the DGX Community!<br/><br/>
+          const htmlContent = `<!DOCTYPE html>
+          <html>
+          <head>
+              <style>
+                  .button {
+                      display: inline-block;
+                      padding: 10px 20px;
+                      background-color: #28a745;
+                      color: white;
+                      text-decoration: none;
+                      border-radius: 5px;
+                      font-size: 16px;
+                  }
+                  .footer {
+                      font-size: 12px;
+                      color: #777;
+                      margin-top: 20px;
+                  }
+              </style>
+          </head>
+          <body style="font-family: Arial, sans-serif; color: #333; line-height: 1.6;">
+              <p>Welcome to the DGX Community!,</p>
+              <p>Welcome to the DGX Community! We’re thrilled to have you join us. To complete your registration, please click the button below:</p>
+              <p><a href="${registrationLink}" class="button">Complete Your Registration</a></p>
+              <p>If you did not sign up for the DGX Community, you can safely disregard this email.</p>
+              <p>Thank you,<br>The DGX Community Team</p>
+              <div class="footer">
+                  <p>This is an automated message. Please do not reply directly to this email.</p>
+              </div>
+          </body>
+          </html>`;
 
-          We're excited to have you join us. To complete your registration, please click the button below:<br/><br/>
-
-          <a href="${registrationLink}" style="padding: 10px 20px; background-color: #28a745; color: #fff; text-decoration: none; border-radius: 5px;">Complete Your Registration</a><br/><br/>
-
-          If you didn't sign up for the DGX Community, feel free to ignore this email.<br/><br/>
-
-          Best regards,<br/>
-          The DGX Community Team`;
 
           closeConnection();
           const mailsent = await mailSender(
@@ -918,7 +992,8 @@ export const passwordRecovery = async (req, res) => {
   // Validate request body
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    const warningMessage = "Data is not in the right format";
+    const warningMessage = "The data format is incorrect. Please ensure it meets the required format and try again.";
+
     logWarning(warningMessage); // Log the warning
     return res
       .status(400)
@@ -957,25 +1032,51 @@ export const passwordRecovery = async (req, res) => {
 
             const message = `Hello,
 
-            It looks like you’ve requested to reset your password for the DGX Community. Don’t worry, we’ve got you covered! Just click the link below to create a new password:
-            
-            Reset your password: ${registrationLink}
-            
-            If you didn’t request a password reset, no problem—just ignore this email. Your account is still secure.
-            
-            Best regards,
-            The DGX Community Team`;
+              We received a request to reset the password for your DGX Community account. Please click the link below to create a new password:
 
-            const htmlContent = `Hello,<br/><br/>
-            
-            It looks like you’ve requested to reset your password for the DGX Community. Don’t worry, we’ve got you covered! Just click the button below to create a new password:<br/><br/>
+              Reset your password: ${registrationLink}
 
-            <a href="${registrationLink}" style="padding: 10px 20px; background-color: #007BFF; color: #fff; text-decoration: none; border-radius: 5px;">Reset Your Password</a><br/><br/>
-            
-            If you didn’t request a password reset, no problem—just ignore this email. Your account is still secure.<br/><br/>
-            
-            Best regards,<br/>
-            The DGX Community Team`;
+              If you did not request a password reset, please disregard this email. Your account remains secure.
+
+              For questions, contact us at support@yourdomain.com.
+
+              Thank you,
+              The DGX Community Team`;
+
+
+            const htmlContent = `<!DOCTYPE html>
+              <html>
+              <head>
+                  <style>
+                      .button {
+                          display: inline-block;
+                          padding: 10px 15px;
+                          background-color: #0056b3;
+                          color: white;
+                          text-decoration: none;
+                          border-radius: 5px;
+                          font-size: 16px;
+                      }
+                      .footer {
+                          font-size: 12px;
+                          color: #777;
+                          margin-top: 20px;
+                      }
+                  </style>
+              </head>
+              <body style="font-family: Arial, sans-serif; color: #333; line-height: 1.6;">
+                  <p>Hello,</p>
+                  <p>We received a request to reset the password for your DGX Community account. Please click the button below to create a new password:</p>
+                  <p><a href="${registrationLink}" class="button">Reset Your Password</a></p>
+                  <p>If you did not request a password reset, you can safely ignore this message. Your account remains secure.</p>
+                  <p>For questions, contact us at <a href="mailto:support@yourdomain.com">support@yourdomain.com</a>.</p>
+                  <p>Thank you,<br>The DGX Community Team</p>
+                  <div class="footer">
+                      <p>This is an automated message. Please do not reply directly to this email.</p>
+                  </div>
+              </body>
+              </html>`;
+
 
             closeConnection();
             const mailsent = await mailSender(
@@ -1047,7 +1148,8 @@ export const resetPassword = async (req, res) => {
   // Validate request body
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    const warningMessage = "Data is not in the right format";
+    const warningMessage = "The data format is incorrect. Please ensure it meets the required format and try again.";
+
     logWarning(warningMessage); // Log the warning
     return res
       .status(400)
